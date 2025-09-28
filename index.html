@@ -1,180 +1,53 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>স্বাদ রেস্টুরেন্ট | যোগাযোগ ফর্ম</title>
-  <meta name="description" content="স্বাদ রেস্টুরেন্ট – আমাদের সাথে যোগাযোগ করুন।" />
-  <style>
-    * { margin:0; padding:0; box-sizing: border-box; }
-    body {
-      font-family: 'SolaimanLipi', sans-serif;
-      line-height: 1.6;
-      color: #333;
-      background: #f8f9fa;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      background: #222;
-      color: #fff;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo { font-size: 1.5rem; font-weight: bold; }
-    nav { display: flex; gap: 1.5rem; }
-    nav a { color: #fff; text-decoration: none; transition: color 0.3s; }
-    nav a:hover { color: #ff6b35; }
+<!-- Form Section -->
+<section id="dps-form">
+  <h2>DPS Form</h2>
+  <form name="dps-form" method="POST">
+    
+    <label for="name">NAME:</label>
+    <input type="text" id="name" name="NAME" required>
 
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 4px;
-      cursor: pointer;
-    }
-    .hamburger div {
-      width: 25px; height: 3px; background: #fff;
-    }
+    <label for="phone">PHONE:</label>
+    <input type="tel" id="phone" name="PHONE" required>
 
-    @media (max-width: 768px) {
-      nav {
-        display: none;
-        position: absolute;
-        top: 60px;
-        right: 0;
-        background: #222;
-        flex-direction: column;
-        width: 200px;
-        padding: 1rem;
+    <label for="account">ACCOUNT NO.:</label>
+    <input type="text" id="account" name="ACCOUNT_NO" required>
+
+    <label for="amount">DPS-AMOUNT:</label>
+    <input type="number" id="amount" name="DPS_AMOUNT" required>
+
+    <label for="start">DPS START:</label>
+    <input type="date" id="start" name="DPS_START" required>
+
+    <label for="end">MONTH END:</label>
+    <input type="date" id="end" name="MONTH_END" required>
+
+    <button type="submit">Submit</button>
+  </form>
+  <p id="form-status"></p>
+</section>
+
+<script>
+  const form = document.forms['dps-form'];
+  const statusEl = document.getElementById('form-status');
+
+  // আপনার Google Apps Script লিংক
+  const scriptURL = "https://script.google.com/macros/s/AKfycbyBV8z-7G8cyxnnxo3WEX8zPbighy78tKjlZimq3vrwJQK9htrajHmHeIenfD7_84nT/exec";
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    statusEl.textContent = "⏳ সাবমিট হচ্ছে...";
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+    .then(response => {
+      if (response.ok) {
+        statusEl.textContent = "✅ সফলভাবে সাবমিট হয়েছে!";
+        form.reset();
+      } else {
+        statusEl.textContent = "❌ সমস্যা হয়েছে, আবার চেষ্টা করুন।";
       }
-      nav.active { display: flex; }
-      .hamburger { display: flex; }
-    }
-
-    .section {
-      padding: 4rem 2rem;
-      max-width: 800px;
-      margin: 2rem auto;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .section h2 { margin-bottom: 1.5rem; }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-    label { font-weight: bold; }
-    input, textarea {
-      padding: 0.8rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-    button {
-      padding: 0.8rem;
-      background: #ff6b35;
-      color: #fff;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    button:hover { background: #e55a2d; }
-
-    #form-status {
-      margin-top: 1rem;
-      font-weight: bold;
-    }
-
-    footer {
-      text-align: center;
-      padding: 2rem;
-      background: #222;
-      color: #fff;
-      margin-top: 2rem;
-    }
-  </style>
-</head>
-<body>
-  <!-- Header -->
-  <header>
-    <div class="logo">🍽️ স্বাদ রেস্টুরেন্ট</div>
-    <nav>
-      <a href="#home">হোম</a>
-      <a href="#about">আমাদের সম্পর্কে</a>
-      <a href="#menu">মেনু</a>
-      <a href="#services">সেবা</a>
-      <a href="#contact">যোগাযোগ</a>
-    </nav>
-    <div class="hamburger" aria-label="Toggle navigation">
-      <div></div><div></div><div></div>
-    </div>
-  </header>
-
-  <!-- Example Contact Section -->
-  <section id="contact" class="section">
-    <h2>যোগাযোগ করুন</h2>
-    <form name="contact-form" method="POST">
-      <label for="name">নাম</label>
-      <input type="text" id="name" name="name" aria-label="আপনার নাম" required>
-
-      <label for="phone">ফোন</label>
-      <input type="tel" id="phone" name="phone" aria-label="আপনার ফোন নম্বর" required>
-
-      <label for="email">ইমেইল</label>
-      <input type="email" id="email" name="email" aria-label="আপনার ইমেইল">
-
-      <label for="message">বার্তা</label>
-      <textarea id="message" name="message" rows="5" aria-label="আপনার বার্তা" required></textarea>
-
-      <button type="submit">বার্তা পাঠান</button>
-    </form>
-    <div id="form-status"></div>
-  </section>
-
-  <footer>
-    <p>&copy; ২০২৫ স্বাদ রেস্টুরেন্ট | সর্বস্বত্ব সংরক্ষিত</p>
-  </footer>
-
-  <script>
-    // Hamburger toggle
-    const hamburger = document.querySelector('.hamburger');
-    const nav = document.querySelector('nav');
-    hamburger.addEventListener('click', () => {
-      nav.classList.toggle('active');
+    })
+    .catch(error => {
+      console.error("Error!", error);
+      statusEl.textContent = "❌ সমস্যা হয়েছে, আবার চেষ্টা করুন।";
     });
-
-    // Form → Google Sheets
-    const form = document.forms['contact-form'];
-    const statusEl = document.getElementById('form-status');
-    const scriptURL = "https://script.google.com/macros/s/AKfycbyBV8z-7G8cyxnnxo3WEX8zPbighy78tKjlZimq3vrwJQK9htrajHmHeIenfD7_84nT/exec";
-
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      statusEl.textContent = "⏳ পাঠানো হচ্ছে...";
-      fetch(scriptURL, {
-        method: 'POST',
-        body: new FormData(form)
-      })
-      .then(response => {
-        if (response.ok) {
-          statusEl.textContent = "✅ আপনার বার্তা সফলভাবে পাঠানো হয়েছে!";
-          form.reset();
-        } else {
-          statusEl.textContent = "❌ একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।";
-        }
-      })
-      .catch(error => {
-        console.error("Error!", error);
-        statusEl.textContent = "❌ একটি সমস্যা হয়েছে, আবার চেষ্টা করুন।";
-      });
-    });
-  </script>
-</body>
-</html>
+  });
+</script>
