@@ -1,56 +1,75 @@
-<!-- DPS Form Section -->
-<section id="dps-form" style="padding: 3rem; background: #f8f9fa; font-family: 'Noto Sans Bengali', sans-serif;">
-  <div style="max-width: 600px; margin: auto; background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-    <h2 style="text-align:center; margin-bottom: 1.5rem; color:#2c3e50;">💼 DPS Registration Form</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DPS Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+    }
+    button {
+      margin-top: 15px;
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #007BFF;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>DPS Entry Form</h2>
+    <form method="POST" action="YOUR_WEB_APP_URL">
+      <label for="NAME">Name</label>
+      <input type="text" name="NAME" required>
 
-    <form name="dps-form" method="POST" style="display:flex; flex-direction:column; gap:1rem;">
-      
-      <label for="name">👤 NAME</label>
-      <input type="text" id="name" name="NAME" required style="padding:0.8rem; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+      <label for="PHONE">Phone</label>
+      <input type="tel" name="PHONE" required>
 
-      <label for="phone">📞 PHONE</label>
-      <input type="tel" id="phone" name="PHONE" required style="padding:0.8rem; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+      <label for="ACCOUNT_NO">Account No.</label>
+      <input type="text" name="ACCOUNT_NO" required>
 
-      <label for="account">🏦 ACCOUNT NO.</label>
-      <input type="text" id="account" name="ACCOUNT_NO" required style="padding:0.8rem; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+      <label for="DPS_AMOUNT">DPS Amount</label>
+      <input type="number" name="DPS_AMOUNT" required>
 
-      <label for="amount">💰 DPS-AMOUNT</label>
-      <input type="number" id="amount" name="DPS_AMOUNT" required style="padding:0.8rem; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
+      <label for="DPS_START">DPS Start</label>
+      <input type="date" name="DPS_START" required>
 
-      <label for="start">📅 DPS START</label>
-      <input type="date" id="start" name="DPS_START" required style="padding:0.8rem; border:1px solid #ccc; border-radius:8px; font-size:1rem;">
-
-      <button type="submit" style="padding:1rem; background:#2c3e50; color:#fff; border:none; border-radius:8px; font-size:1.1rem; cursor:pointer; transition:0.3s;">
-        ✅ Submit
-      </button>
+      <button type="submit">Submit</button>
     </form>
-
-    <p id="form-status" style="margin-top:1rem; font-weight:bold; text-align:center;"></p>
   </div>
-</section>
-
-<script>
-  const form = document.forms['dps-form'];
-  const statusEl = document.getElementById('form-status');
-
-  // আপনার Google Apps Script লিংক
-  const scriptURL = "https://script.google.com/macros/s/AKfycbyBV8z-7G8cyxnnxo3WEX8zPbighy78tKjlZimq3vrwJQK9htrajHmHeIenfD7_84nT/exec";
-
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    statusEl.textContent = "⏳ সাবমিট হচ্ছে...";
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
-    .then(response => {
-      if (response.ok) {
-        statusEl.textContent = "✅ সফলভাবে সাবমিট হয়েছে!";
-        form.reset();
-      } else {
-        statusEl.textContent = "❌ সমস্যা হয়েছে, আবার চেষ্টা করুন।";
-      }
-    })
-    .catch(error => {
-      console.error("Error!", error);
-      statusEl.textContent = "❌ সমস্যা হয়েছে, আবার চেষ্টা করুন।";
-    });
-  });
-</script>
+</body>
+</html>
