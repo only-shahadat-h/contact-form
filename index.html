@@ -47,12 +47,17 @@
     button:hover {
       background: #0056b3;
     }
+    #msg {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <div class="form-container">
     <h2>DPS Entry Form</h2>
-    <form method="POST" action="YOUR_WEB_APP_URL">
+    <form id="dpsForm">
       <label for="NAME">Name</label>
       <input type="text" name="NAME" required>
 
@@ -70,6 +75,39 @@
 
       <button type="submit">Submit</button>
     </form>
+    <div id="msg"></div>
   </div>
+
+  <script>
+    const form = document.getElementById("dpsForm");
+    const msg = document.getElementById("msg");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const url = "https://script.google.com/macros/s/AKfycbyBV8z-7G8cyxnnxo3WEX8zPbighy78tKjlZimq3vrwJQK9htrajHmHeIenfD7_84nT/exec"; // আপনার URL
+
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          body: formData,
+        });
+        const data = await res.json();
+
+        if (data.result === "success") {
+          msg.style.color = "green";
+          msg.textContent = data.message;
+          form.reset();
+        } else {
+          msg.style.color = "red";
+          msg.textContent = "Failed to save data.";
+        }
+      } catch (err) {
+        msg.style.color = "red";
+        msg.textContent = "Error: " + err.message;
+      }
+    });
+  </script>
 </body>
 </html>
